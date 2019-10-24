@@ -1,7 +1,7 @@
-# 2048 console ver:
-***** x - exit *****
-move: left, right, up, down, restart, x
-
+# 2048 console:
+text and keyboard version.  
+***** x - exit, r - restart *****
+move: left, right, up, down  
 [2, 0, 0, 0]  
 [0, 2, 0, 0]  
 [0, 0, 0, 0]  
