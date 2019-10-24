@@ -1,5 +1,5 @@
 import random
-
+import time
 
 def line_shift(line):
     new_row = []
@@ -33,6 +33,23 @@ def gen_num():
     return num
 
 
+def gen_num_in_board():
+    list_index_row = []
+    num_list = []
+    for index_row, row in enumerate(board):
+        if 0 in row:
+            list_index_row.append(index_row)
+    if len(list_index_row) == 0:
+        print('GAME OVER!!!')
+        exit(0)
+    row = random.choice(list_index_row)
+    for index_num, num in enumerate(board[row]):
+        if num == 0:
+            num_list.append(index_num)
+    num = random.choice(list_index_row)
+    board[row][num] = gen_num()
+
+
 def gen_start_board(size_row=4, size_col=4):
     board = [[0] * size_row for i in range(size_col)]
     while True:
@@ -55,26 +72,14 @@ for i in board:
 
 
 def x_move(step):
-    coordinate_line = []
-    coordinate_col = []
     for index, row in enumerate(board):
         if step == 'left':
             board[index] = line_shift(row)
         if step == 'right':
             board[index] = line_shift(reversed(row))[::-1]
-        if 0 in row:
-            coordinate_line.append(index)
-    coordinate_line = random.choices(coordinate_line)[0]
-    for index_num, num in enumerate(board[coordinate_line]):
-        if num == 0:
-            coordinate_col.append(index_num)
-    coordinate_col = random.choices(coordinate_col)[0]
-    board[coordinate_line][coordinate_col] = gen_num()
 
 
 def y_move(step):
-    coordinate_line = []
-    coordinate_col = []
     for col_board in range(4):
         line = []
         for row_board in range(4):
@@ -85,18 +90,10 @@ def y_move(step):
             line = line_shift(line)
         for row_board in range(4):
             board[row_board][col_board] = line[row_board]
-        if 0 in line:
-            coordinate_line.append(col_board)
-
-    coordinate_line = random.choices(coordinate_line)[0]
-    for index, num in enumerate(board[coordinate_line]):
-        if num == 0:
-            coordinate_col.append(index)
-    coordinate_col = random.choices(coordinate_col)[0]
-    board[coordinate_line][coordinate_col] = gen_num()
 
 
 while True:
+    time.sleep(0.25)
     step = input('Enter move: ')
     if step in ('right', 'left'):
         x_move(step)
@@ -107,6 +104,7 @@ while True:
         board = gen_start_board()
     if step == 'x':
         exit(0)
+    gen_num_in_board()
     print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
     print('move: left, right, up, down')
     for i in board:
