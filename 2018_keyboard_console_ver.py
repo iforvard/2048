@@ -37,19 +37,19 @@ def gen_num():
 
 
 def gen_num_in_board():
-    index_row = []
-    index_num = []
-    for ind, row in enumerate(board):
+    list_index_row = []
+    num_list = []
+    for index_row, row in enumerate(board):
         if 0 in row:
-            index_row.append(ind)
-    if len(index_row) == 0:
+            list_index_row.append(index_row)
+    if len(list_index_row) == 0:
         print('GAME OVER!!!')
         exit(0)
-    row = random.choices(index_row)[0]
-    for num in board[row]:
+    row = random.choice(list_index_row)
+    for index_num, num in enumerate(board[row]):
         if num == 0:
-            index_num.append(num)
-    num = random.choices(index_num)[0]
+            num_list.append(index_num)
+    num = random.choice(list_index_row)
     board[row][num] = gen_num()
 
 
