@@ -2,8 +2,9 @@ import random
 import time
 import keyboard
 
-
+score = 0
 def line_shift(line):
+    global score
     new_row = []
     for num_line in line:
         if num_line != 0:
@@ -11,6 +12,7 @@ def line_shift(line):
                 if new_row[-1][1] == 0:
                     if new_row[-1][0] == num_line:
                         new_row[-1] = [num_line * 2, 1]
+                        score += num_line * 2
                     else:
                         new_row.append([num_line, 0])
                 else:
@@ -108,5 +110,6 @@ while True:
     place_num_on_the_board()
     print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
     print('move: left, right, up, down')
+    print(f'Score: {score}')
     for i in board:
         print(i)
