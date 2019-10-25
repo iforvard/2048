@@ -10,7 +10,7 @@ Enter move: **`right`**
 ***** x - exit, r - restart *****  
 move: left, right, up, down  
 Score: 4  
+[0, 2, 0, 0]  
 [0, 0, 0, 0]  
 [0, 0, 0, 0]  
-[0, 0, 0, 0]  
-[0, 2, 0, 4]   
+[0, 0, 0, 4]   
