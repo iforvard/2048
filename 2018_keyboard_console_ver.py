@@ -1,6 +1,5 @@
 import random
 import time
-
 import keyboard
 
 
@@ -36,21 +35,17 @@ def gen_num():
     return num
 
 
-def gen_num_in_board():
-    list_index_row = []
-    num_list = []
-    for index_row, row in enumerate(board):
-        if 0 in row:
-            list_index_row.append(index_row)
-    if len(list_index_row) == 0:
+def place_num_on_the_board():
+    place_list = []
+    for i in range(4):
+        for j in range(4):
+            if board[i][j] == 0:
+                place_list.append((i, j))
+    if len(place_list) == 0:
         print('GAME OVER!!!')
         exit(0)
-    row = random.choice(list_index_row)
-    for index_num, num in enumerate(board[row]):
-        if num == 0:
-            num_list.append(index_num)
-    num = random.choice(list_index_row)
-    board[row][num] = gen_num()
+    place = random.choice(place_list)
+    board[place[0]][place[1]] = gen_num()
 
 
 def gen_start_board(size_row=4, size_col=4):
@@ -98,16 +93,19 @@ def y_move(step):
 while True:
     time.sleep(0.25)
     step = keyboard.read_key()
+    if step not in ('right', 'left', 'down', 'up', 'r', 'x'):
+        continue
     if step in ('right', 'left'):
         x_move(step)
     if step in ('down', 'up'):
         y_move(step)
-    if step in ('r'):
+    if step == 'r':
         print('NEW GAME:')
         board = gen_start_board()
     if step == 'x':
+        print('You pressed x - exit the game')
         exit(0)
-    gen_num_in_board()
+    place_num_on_the_board()
     print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
     print('move: left, right, up, down')
     for i in board:
