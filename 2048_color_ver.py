@@ -1,8 +1,38 @@
+from colorama import Fore, Back, Style
 import random
+import time
+import keyboard
+
+color = {
+    0: Back.LIGHTWHITE_EX,
+    2: Back.LIGHTBLUE_EX,
+    4: Back.LIGHTRED_EX,
+    8: Back.LIGHTYELLOW_EX,
+    16: Back.LIGHTBLACK_EX,
+    32: Back.LIGHTCYAN_EX,
+    64: Back.LIGHTGREEN_EX,
+    128: Back.LIGHTMAGENTA_EX,
+    256: Back.GREEN,
+    512: Back.RED,
+    1024: Back.WHITE,
+    2048: Back.CYAN,
+}
+
+def color_print_row(stack_number):
+    for num_row in range(3):
+        for num in stack_number:
+            if num_row in (0, 2):
+                print(f"{color[num]}{' ' * 8}", end='')
+            else:
+                size = 8 - len(str(num))
+                size_left = size // 2
+                size_right = size - (size // 2)
+                srt_and_num = f"{' ' * size_left}{num}{' ' * size_right}"
+                print(f"{color[num]}{srt_and_num}", end='')
+        print(Back.RESET)
+
 
 score = 0
-
-
 def line_shift(line):
     global score
     new_row = []
@@ -68,7 +98,7 @@ board = gen_start_board()
 print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
 print('move: left, right, up, down')
 for i in board:
-    print(i)
+    color_print_row(i)
 
 
 def x_move(step):
@@ -93,7 +123,8 @@ def y_move(step):
 
 
 while True:
-    step = input('Enter move: ')
+    time.sleep(0.25)
+    step = keyboard.read_key()
     if step not in ('right', 'left', 'down', 'up', 'r', 'x'):
         continue
     if step in ('right', 'left'):
@@ -111,4 +142,4 @@ while True:
     print('move: left, right, up, down')
     print(f'Score: {score}')
     for i in board:
-        print(i)
+        color_print_row(i)
