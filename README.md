@@ -1,4 +1,4 @@
-# 2048 console game: text and keyboard version.
+# 2048 console game: text, color and keyboard version.
 ***** x - exit, r - restart *****  
 move: left, right, up, down  
 [0, 0, 0, 0]  
@@ -14,3 +14,5 @@ Score: 4
 [0, 0, 0, 0]  
 [0, 0, 0, 0]  
 [0, 0, 0, 4]   
+# Color ver in console
+![alt text](https://github.com/iforvard/2048/blob/master/2048.png)
