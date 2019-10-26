@@ -1,10 +1,12 @@
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style, init
+from sys import platform
 import random
 import time
 import keyboard
-
+import os
+init()
 color = {
-    0: Back.LIGHTWHITE_EX,
+    0: Back.WHITE + Fore.GREEN,
     2: Back.LIGHTBLUE_EX,
     4: Back.LIGHTRED_EX,
     8: Back.LIGHTYELLOW_EX,
@@ -138,6 +140,10 @@ while True:
         print('You pressed x - exit the game')
         exit(0)
     place_num_on_the_board()
+    if platform == 'win32':
+        os.system('cls')
+    if 'linux' in platform:
+        os.system('clear')
     print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
     print('move: left, right, up, down')
     print(f'Score: {score}')
