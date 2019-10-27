@@ -4,21 +4,25 @@ import random
 import time
 import keyboard
 import os
+
 init()
+score = 0
 color = {
-    0: Back.WHITE + Fore.GREEN,
-    2: Back.LIGHTBLUE_EX,
-    4: Back.LIGHTRED_EX,
-    8: Back.LIGHTYELLOW_EX,
-    16: Back.LIGHTBLACK_EX,
+    0: Back.LIGHTWHITE_EX,
+    2: Back.BLUE,
+    4: Back.YELLOW,
+    8: Back.LIGHTBLACK_EX,
+    16: Back.BLACK,
     32: Back.LIGHTCYAN_EX,
     64: Back.LIGHTGREEN_EX,
     128: Back.LIGHTMAGENTA_EX,
     256: Back.GREEN,
     512: Back.RED,
     1024: Back.WHITE,
-    2048: Back.CYAN,
+    2048: Back.LIGHTRED_EX,
+    4096: Back.MAGENTA
 }
+
 
 def color_print_row(stack_number):
     for num_row in range(3):
@@ -34,7 +38,6 @@ def color_print_row(stack_number):
         print(Back.RESET)
 
 
-score = 0
 def line_shift(line):
     global score
     new_row = []
@@ -96,13 +99,6 @@ def gen_start_board(size_row=4, size_col=4):
     return board
 
 
-board = gen_start_board()
-print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
-print('move: left, right, up, down')
-for i in board:
-    color_print_row(i)
-
-
 def x_move(step):
     for index, row in enumerate(board):
         if step == 'left':
@@ -124,28 +120,38 @@ def y_move(step):
             board[row_board][col_board] = line[row_board]
 
 
-while True:
-    time.sleep(0.25)
-    step = keyboard.read_key()
-    if step not in ('right', 'left', 'down', 'up', 'r', 'x'):
-        continue
-    if step in ('right', 'left'):
-        x_move(step)
-    if step in ('down', 'up'):
-        y_move(step)
-    if step == 'r':
-        print('NEW GAME:')
-        board = gen_start_board()
-    if step == 'x':
-        print('You pressed x - exit the game')
-        exit(0)
-    place_num_on_the_board()
+def print_game_screen():
     if platform == 'win32':
         os.system('cls')
     if 'linux' in platform:
         os.system('clear')
-    print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
+
+    print(Fore.LIGHTWHITE_EX + f'{"*" * 5} x - exit, r - restart {"*" * 5}')
     print('move: left, right, up, down')
     print(f'Score: {score}')
     for i in board:
         color_print_row(i)
+
+
+board = gen_start_board()
+while True:
+    print_game_screen()
+    time.sleep(0.5)
+    step = keyboard.read_key()
+    tmp_board = [row[:] for row in board]
+    if step in ('right', 'left'):
+        x_move(step)
+    elif step in ('down', 'up'):
+        y_move(step)
+    elif step == 'r':
+        board = gen_start_board()
+        score = 0
+        continue
+    elif step == 'x':
+        print('You pressed x - exit the game')
+        exit(0)
+    else:
+        continue
+    if tmp_board == board:
+        continue
+    place_num_on_the_board()
