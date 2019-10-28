@@ -92,10 +92,8 @@ def gen_start_board(size_row=4, size_col=4):
         gen_coordinate_num2 = [random.randint(0, 3), random.randint(0, 3)]
         if gen_coordinate_num1 != gen_coordinate_num2:
             break
-    gen_num1 = gen_num()
-    gen_num2 = gen_num()
-    board[gen_coordinate_num1[0]][gen_coordinate_num1[1]] = gen_num1
-    board[gen_coordinate_num2[0]][gen_coordinate_num2[1]] = gen_num2
+    board[gen_coordinate_num1[0]][gen_coordinate_num1[1]] = gen_num()
+    board[gen_coordinate_num2[0]][gen_coordinate_num2[1]] = gen_num()
     return board
 
 
