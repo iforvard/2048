@@ -28,9 +28,9 @@ def color_print_row(stack_number):
     for num_row in range(3):
         for num in stack_number:
             if num_row in (0, 2):
-                print(f"{color[num]}{' ' * 8}", end='')
+                print(f"{color[num]}{' ' * 7}", end='')
             else:
-                size = 8 - len(str(num))
+                size = 7 - len(str(num))
                 size_left = size // 2
                 size_right = size - (size // 2)
                 srt_and_num = f"{' ' * size_left}{num}{' ' * size_right}"
