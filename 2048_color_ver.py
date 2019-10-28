@@ -25,12 +25,14 @@ color = {
 
 
 def color_print_row(stack_number):
+    block_width = 7
+
     for num_row in range(3):
         for num in stack_number:
             if num_row in (0, 2):
-                print(f"{color[num]}{' ' * 7}", end='')
+                print(f"{color[num]}{' ' * block_width}", end='')
             else:
-                size = 7 - len(str(num))
+                size = block_width - len(str(num))
                 size_left = size // 2
                 size_right = size - (size // 2)
                 srt_and_num = f"{' ' * size_left}{num}{' ' * size_right}"
@@ -119,6 +121,7 @@ def y_move(step):
 
 
 def print_game_screen():
+    # clear console
     if platform == 'win32':
         os.system('cls')
     else:
@@ -141,7 +144,7 @@ while True:
         x_move(step)
     elif step in ('down', 'up'):
         y_move(step)
-    elif step == 'r':
+    elif step == 'r': # restart
         board = gen_start_board()
         score = 0
         continue
@@ -150,6 +153,6 @@ while True:
         exit(0)
     else:
         continue
-    if tmp_board == board:
+    if tmp_board == board: # The move did not change the board
         continue
     place_num_on_the_board()
