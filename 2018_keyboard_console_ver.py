@@ -1,8 +1,12 @@
-import random
 import time
 import keyboard
+from sys import platform
+import random
+import os
 
 score = 0
+
+
 def line_shift(line):
     global score
     new_row = []
@@ -51,65 +55,71 @@ def place_num_on_the_board():
 
 
 def gen_start_board(size_row=4, size_col=4):
-    board = [[0] * size_row for i in range(size_col)]
+    board2048 = [[i * 0] * size_row for i in range(size_col)]
     while True:
         gen_coordinate_num1 = [random.randint(0, 3), random.randint(0, 3)]
         gen_coordinate_num2 = [random.randint(0, 3), random.randint(0, 3)]
         if gen_coordinate_num1 != gen_coordinate_num2:
             break
-    gen_num1 = gen_num()
-    gen_num2 = gen_num()
-    board[gen_coordinate_num1[0]][gen_coordinate_num1[1]] = gen_num1
-    board[gen_coordinate_num2[0]][gen_coordinate_num2[1]] = gen_num2
-    return board
+    board2048[gen_coordinate_num1[0]][gen_coordinate_num1[1]] = gen_num()
+    board2048[gen_coordinate_num2[0]][gen_coordinate_num2[1]] = gen_num()
+    return board2048
 
 
-board = gen_start_board()
-print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
-print('move: left, right, up, down')
-for i in board:
-    print(i)
-
-
-def x_move(step):
+def x_move(move_side):
     for index, row in enumerate(board):
-        if step == 'left':
+        if move_side == 'left':
             board[index] = line_shift(row)
-        if step == 'right':
+        if move_side == 'right':
             board[index] = line_shift(reversed(row))[::-1]
 
 
-def y_move(step):
+def y_move(move_side):
     for col_board in range(4):
         line = []
         for row_board in range(4):
             line.append(board[row_board][col_board])
-        if step == 'down':
+        if move_side == 'down':
             line = line_shift(reversed(line))[::-1]
-        if step == 'up':
+        if move_side == 'up':
             line = line_shift(line)
         for row_board in range(4):
             board[row_board][col_board] = line[row_board]
 
 
-while True:
-    time.sleep(0.25)
-    step = keyboard.read_key()
-    if step not in ('right', 'left', 'down', 'up', 'r', 'x'):
-        continue
-    if step in ('right', 'left'):
-        x_move(step)
-    if step in ('down', 'up'):
-        y_move(step)
-    if step == 'r':
-        print('NEW GAME:')
-        board = gen_start_board()
-    if step == 'x':
-        print('You pressed x - exit the game')
-        exit(0)
-    place_num_on_the_board()
+def print_game_screen():
+    # clear console
+    if platform == 'win32':
+        os.system('cls')
+    else:
+        os.system('clear')
+
     print(f'{"*" * 5} x - exit, r - restart {"*" * 5}')
     print('move: left, right, up, down')
     print(f'Score: {score}')
     for i in board:
         print(i)
+
+
+board = gen_start_board()
+while True:
+    print_game_screen()
+    time.sleep(0.4)
+    step = keyboard.read_key()
+    tmp_board = [row[:] for row in board]
+    if step in ('right', 'left'):
+        x_move(step)
+    elif step in ('down', 'up'):
+        y_move(step)
+    elif step == 'r':  # restart
+        board = gen_start_board()
+        score = 0
+        continue
+    elif step == 'x':
+        print('You pressed x - exit the game')
+        exit(0)
+    else:
+        continue
+    if tmp_board == board:  # The move did not change the board
+        continue
+    place_num_on_the_board()
