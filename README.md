@@ -16,3 +16,4 @@ Score: 4
 [0, 0, 0, 4]   
 # Color ver in console
 ![alt text](https://github.com/iforvard/2048/blob/master/2048.gif)
+![alt text](https://github.com/iforvard/2048/blob/master/2048.png)
