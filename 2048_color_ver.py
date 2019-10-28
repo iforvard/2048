@@ -1,4 +1,4 @@
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Back, init
 from sys import platform
 import random
 import time
@@ -88,33 +88,33 @@ def place_num_on_the_board():
 
 
 def gen_start_board(size_row=4, size_col=4):
-    board = [[0] * size_row for i in range(size_col)]
+    board2048 = [[i * 0] * size_row for i in range(size_col)]
     while True:
         gen_coordinate_num1 = [random.randint(0, 3), random.randint(0, 3)]
         gen_coordinate_num2 = [random.randint(0, 3), random.randint(0, 3)]
         if gen_coordinate_num1 != gen_coordinate_num2:
             break
-    board[gen_coordinate_num1[0]][gen_coordinate_num1[1]] = gen_num()
-    board[gen_coordinate_num2[0]][gen_coordinate_num2[1]] = gen_num()
-    return board
+    board2048[gen_coordinate_num1[0]][gen_coordinate_num1[1]] = gen_num()
+    board2048[gen_coordinate_num2[0]][gen_coordinate_num2[1]] = gen_num()
+    return board2048
 
 
-def x_move(step):
+def x_move(move_side):
     for index, row in enumerate(board):
-        if step == 'left':
+        if move_side == 'left':
             board[index] = line_shift(row)
-        if step == 'right':
+        if move_side == 'right':
             board[index] = line_shift(reversed(row))[::-1]
 
 
-def y_move(step):
+def y_move(move_side):
     for col_board in range(4):
         line = []
         for row_board in range(4):
             line.append(board[row_board][col_board])
-        if step == 'down':
+        if move_side == 'down':
             line = line_shift(reversed(line))[::-1]
-        if step == 'up':
+        if move_side == 'up':
             line = line_shift(line)
         for row_board in range(4):
             board[row_board][col_board] = line[row_board]
@@ -144,7 +144,7 @@ while True:
         x_move(step)
     elif step in ('down', 'up'):
         y_move(step)
-    elif step == 'r': # restart
+    elif step == 'r':  # restart
         board = gen_start_board()
         score = 0
         continue
@@ -153,6 +153,6 @@ while True:
         exit(0)
     else:
         continue
-    if tmp_board == board: # The move did not change the board
+    if tmp_board == board:  # The move did not change the board
         continue
     place_num_on_the_board()
