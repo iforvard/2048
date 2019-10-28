@@ -121,7 +121,7 @@ def y_move(step):
 def print_game_screen():
     if platform == 'win32':
         os.system('cls')
-    if 'linux' in platform:
+    else:
         os.system('clear')
 
     print(Fore.LIGHTWHITE_EX + f'{"*" * 5} x - exit, r - restart {"*" * 5}')
@@ -134,7 +134,7 @@ def print_game_screen():
 board = gen_start_board()
 while True:
     print_game_screen()
-    time.sleep(0.5)
+    time.sleep(0.4)
     step = keyboard.read_key()
     tmp_board = [row[:] for row in board]
     if step in ('right', 'left'):
