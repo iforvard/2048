@@ -69,7 +69,7 @@ def x_move(move_side):
         if move_side == 'left':
             board[index] = line_shift(row)
         if move_side == 'right':
-            board[index] = line_shift(reversed(row))[::-1]
+            board[index] = line_shift(row[::-1])[::-1]
 
 
 def y_move(move_side):
@@ -78,7 +78,7 @@ def y_move(move_side):
         for row_board in range(4):
             line.append(board[row_board][col_board])
         if move_side == 'down':
-            line = line_shift(reversed(line))[::-1]
+            line = line_shift(line[::-1])[::-1]
         if move_side == 'up':
             line = line_shift(line)
         for row_board in range(4):
