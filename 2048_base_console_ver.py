@@ -102,7 +102,7 @@ def print_game_screen():
 board = gen_start_board()
 while True:
     print_game_screen()
-    step = input('Enter move: ')
+    step = input('Enter move: ').lower()
     tmp_board = [row[:] for row in board]
     if step in ('right', 'left'):
         x_move(step)
