@@ -105,7 +105,7 @@ board = gen_start_board()
 while True:
     print_game_screen()
     time.sleep(0.4)
-    step = keyboard.read_key()
+    step = keyboard.read_key().lower()
     tmp_board = [row[:] for row in board]
     if step in ('right', 'left'):
         x_move(step)
